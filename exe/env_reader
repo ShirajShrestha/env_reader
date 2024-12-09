@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+# Add the lib directory to the load path
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+require "env_reader"
+
+# check if a file path is provided
+if ARGV.empty?
+    puts "Usage: env_reader <file_path>"
+    exit(1)
+end
+
+file_path = ARGV[0]
+
+EnvReader.read_keys(file_path)
