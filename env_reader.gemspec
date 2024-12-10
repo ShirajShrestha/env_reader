@@ -3,18 +3,17 @@
 require_relative "lib/env_reader/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "env_reader"
-  spec.version = EnvReader::VERSION
-  spec.authors = ["ShirajShrestha"]
-  spec.email = ["shresthashiraj333@gmail.com"]
+  spec.name          = "env_reader"
+  spec.version       = EnvReader::VERSION
+  spec.authors       = ["ShirajShrestha"]
+  spec.email         = ["shresthashiraj333@gmail.com"]
 
-  spec.summary = "Reads the keys of the .env file"
-  spec.description = "Reads all the keys in the .env file"
-  spec.homepage = "https://github.com/ShirajShrestha/env_reader"
+  spec.summary       = "Reads the keys of the .env file"
+  spec.description   = "Reads all the keys in the .env file"
+  spec.homepage      = "https://github.com/ShirajShrestha/env_reader"
   spec.required_ruby_version = ">= 3.0.0"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
-
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/ShirajShrestha/env_reader"
   spec.metadata["changelog_uri"] = "https://github.com/ShirajShrestha/env_reader"
@@ -29,13 +28,12 @@ Gem::Specification.new do |spec|
         f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
     end
   end
+
+  # Ensure that executables are in the exe/ directory
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  # Uncomment to register a new dependency of your gem
-  # spec.add_dependency "example-gem", "~> 1.0"
-
-  # For more information and examples about making a new gem, check out our
-  # guide at: https://bundler.io/guides/creating_gem.html
+  # Add the executable files to the gemspec
+  spec.files += Dir["exe/*"]  # Make sure executable scripts are included
 end

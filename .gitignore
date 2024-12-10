@@ -6,3 +6,9 @@
 /pkg/
 /spec/reports/
 /tmp/
+
+/*.gem
+/.git
+/.DS_Store
+/test
+/spec

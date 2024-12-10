@@ -1,6 +1,6 @@
 # EnvReader
 
-This is a ruby gem to extract all the KEYS of the key value pair in the .env file.
+The EnvReader gem is a utility to manage and validate environment variables used in your project. It helps in reading, finding and validating the environment variables used in your project.
 
 ## Installation
 
@@ -26,60 +26,60 @@ bundle add env_reader
 
 ## Usage
 
-- ### Use the gem in Rails Console
+The gem offers several features through its Command-Line Interface (CLI). You can use the commands listed below to find, read, and validate environment keys.
 
-  ```ruby
-  EnvReader.read_keys(Rails.root.join(".env").to_s)
-  ```
+- ### CLI Commands
 
-- ### Use the Gem in a Rake Task
+Run the script using one of the following options:
 
-  You can integrate the gem into a custom Rake task for more control.
+| Command                       | Description                                             |
+| ----------------------------- | ------------------------------------------------------- |
+| `-r, --read-keys [DIRECTORY]` | List all the environment keys used in a directory.      |
+| `-f, --find-keys [DIRECTORY]` | Find all files and display their environment key usage. |
+| `-v, --validate-keys`         | Validate environment keys and check for missing values. |
+| `-e, --extensions x,y,z`      | Specify file extensions to scan (default: rb, erb).     |
+| `-h, --help`                  | Display help for the available commands.                |
 
-1. Create a Rake task file in lib/tasks/ (eg: lib/tasks/read_env.rake)
+### Directly using in a rails directory
 
-   ```ruby
-   namespace :env do
-    desc "Read and output keys from .env file"
-    task read: :environment do
-        EnvReader.read_keys(Rails.root.join(".env").to_s)
-    end
-   end
-   ```
+1. **Without passing directory and extensions**
 
-2. Run the Rake task:
+   - List all the env variables used in the app
+     ```bash
+     env_reader -r
+     ```
+   - Find the files where the variables are used
+     ```
+     env_reader -f
+     ```
+   - Check if the env variables are set or missing and shows if valid or not
+     ```
+     env_reader -v
+     ```
+
+2. **By passing directory and extension**
+
    ```bash
-   rails env:read
+   env_reader -f /path/to/directory -e rb, erb
    ```
 
-- ### Use the Gem in a Controller
+   You can exclude either one or both directory or extension if not necessary. Additionally you can also use other commands to read, find and validate the keys.
 
-1.  Add a route in `config/routes.rb`
+3. **Optional Keys**
 
-    ```ruby
-    Rails.application.routes.draw do
-        get 'env_keys', to: 'home#env_keys'
-    end
-    ```
+   Some keys are optional and may not need validation (e.g., CI, RAILS_ENV). You can modify the list of optional keys in the `optional_keys` method:
 
-2.  Create or update the `home_controller.rb` file in `app/controllers/`
+   To add custom optional keys during validation:
 
-    ```ruby
-    class HomeController < ApplicationController
-        def env_keys
-            EnvReader.read_keys(Rails.root.join(".env").to_s)
+   ```
+   env_reader -v --optional-keys MY_CUSTOM_KEY,ANOTHER_KEY
+   ```
 
-            render plain: "Check the Rails console for the .env keys."
-        end
-    end
-    ```
-
-3.  Start your Rails server
-    ```bash
-    rails server
-    ```
-4.  Visit `http://localhost:3000/env_keys` in your browser.
-    The `.env` file keys will appear in the Rails server logs.
+4. **Help Menu**
+   Run the `-h` or `--help` option to see the available commands.
+   ```
+   env_reader -h
+   ```
 
 ## Contributing
 

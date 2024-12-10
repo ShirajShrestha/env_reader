@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require_relative '../lib/env_reader'
+
+# Start the CLI
+EnvReader.cli
